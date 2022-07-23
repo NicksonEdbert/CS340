@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <title>Order_details</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <h1>order_details</h1>
+    <p>
+      <strong><a href="index.html">Back To Index</a></strong>
+    </p>
+    [ <a href="Customers.html">Cusotmers</a> |
+    <a href="Orders.html">Orders</a> |
+    <a href="Order_Details.html">Order_Details</a> |
+    <a href="Products.html">Products</a> ]
+    <div id="browse" style="display: block">
+      <p><strong>Browse order details</strong></p>
+      <table border="20" cellpadding="20">
+        <tr>
+          <th>order_id</th>
+          <td align="right">1</td>
+          <td align="right">2</td>
+        </tr>
+        <tr>
+          <th>product_id</th>
+          <td align="right">1</td>
+          <td align="right">1</td>
+        </tr>
+        <tr>
+          <th>product_price</th>
+          <td align="right">5.95</td>
+          <td align="right">5.95</td>
+        </tr>
+        <tr>
+          <th>product_qty</th>
+          <td align="right">3</td>
+          <td align="right">2</td>
+        </tr>
+        <tr>
+          <th>discount</th>
+          <td align="right">0.00</td>
+          <td align="right">0.00</td>
+        </tr>
+        <tr>
+          <th>sub_total</th>
+          <td align="right">17.85</td>
+          <td align="right">11.90</td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+    </div>
+    <!-- browse -->
+    <div id="insert" style="display: block">
+      <form id="addorder_detail">
+        <legend><strong>Add order_detail</strong></legend>
+        <fieldset class="fields">
+          <label> order_id </label> <input type="text" name="ordid" />
+          <label> product_id </label> <input type="text" name="proid" />
+          <label> product_price </label> <input type="text" name="proprice" />
+          <label> product_qty </label> <input type="text" name="pqty" />
+          <label> discount </label> <input type="text" name="discon" />
+          <label> subtotal </label> <input type="text" name="stotal" />
+        </fieldset>
+        <input
+          class="btn"
+          type="submit"
+          id="addorder_detail"
+          value="Add a order_detail"
+        />
+        <input class="btn" type="button" value="cancel" />
+      </form>
+      <!--add new order_detail-->
+    </div>
+    <!-- insert -->
+
+    <p>&nbsp;</p>
+    <div id="update" style="display: block">
+      <form id="updateorder_detail">
+        <legend><strong>Update order_detail</strong></legend>
+        <fieldset class="fields">
+          <label> order_id </label>
+          <input type="text" name="ordid" value="1" />
+          <label> product_id </label>
+          <input type="text" name="proid" value="1" />
+          <label> product_price </label>
+          <input type="text" name="proprice" value="5.95" />
+          <label> product_qty </label>
+          <input type="text" name="pqty" value="3" /> <label> discount </label>
+          <input type="text" name="discon" value="0" />
+          <label> subtotal </label>
+          <input type="text" name="stotal" value="17.85" />
+        </fieldset>
+        <input
+          class="btn"
+          type="submit"
+          id="UpdateSaveorder_detail"
+          value="Save Update order_detail"
+        />
+        <input class="btn" type="button" value="cancel" />
+      </form>
+    </div>
+    <!-- update -->
+    <p>&nbsp;</p>
+    <div id="delete" style="display: block">
+      <form id="deleteorder_detail">
+        <legend><strong>Delete order_detail</strong></legend>
+        <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <label>order_id:</label> 1 <label> product_id: </label> 1
+          <label> sub_total: </label> 17.85
+        </fieldset>
+        <input
+          class="btn"
+          type="submit"
+          id="Deleteorder_detail"
+          value="Delete order_detail"
+        />
+        <input class="btn" type="button" value="cancel" />
+      </form>
+    </div>
+    <!-- delete -->
+  </body>
+</html>
