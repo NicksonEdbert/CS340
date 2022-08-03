@@ -1,0 +1,185 @@
+<div class="divBody">
+    <!-- index.hbs -->
+    <h1 style="text-align: center; margin: 0px;">Orange and Apple Website!</h1>
+
+    {{!-- External CSS --}}
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    {{!-- Select Table --}}
+    <h2>Search Using an HTML Form</h2>
+    <p>Search for data from different table!</p>
+    <p>
+    <form id="search-person-html" method='GET' action='/'>
+        <select name="select" id="selectTable" onchange="this.form.submit()">
+            <option>Select a Table</option>
+            <option>Customers</option>
+            <option>Orders</option>
+            <option>Order_Details</option>
+            <option>Products</option>
+        </select>
+        <a href='/'><button class="resetButton">Reset Webpage</button></a>
+    </form>
+    </p>
+
+    {{!-- Create a table --}}
+    <div style="overflow-x:auto;">
+        <table id="people-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we
+                know what each column means when the page renders --}}
+                <tr>
+                    <th>Delete</th>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
+                {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+                {{#each customers}}
+                <tr data-value={{this.customer_id}}>
+                    {{!-- Delete Button --}}
+                    <td><button class="deleteButton" onclick="deletePerson({{this.customer_id}})">x</button></td>
+
+                    <td>{{this.customer_id}}</td>
+                    <td>{{this.first_name}}</td>
+                    <td>{{this.last_name}}</td>
+                    <td>{{this.mid_name}}</td>
+                    <td>{{this.phone}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.cusadd_line1}}</td>
+                    <td>{{this.cusadd_line2}}</td>
+                    <td>{{this.cusadd_city}}</td>
+                    <td>{{this.cusadd_state}}</td>
+                    <td>{{this.cusadd_zipcode}}</td>
+                </tr>
+                {{/each}}
+
+                {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+                {{#each orders}}
+                <tr data-value={{this.order_id}}>
+
+                    {{!-- Delete Button --}}
+                    <td><button class="deleteButton" onclick="deletePerson({{this.order_id}})">x</button></td>
+
+                    <td>{{this.order_id}}</td>
+                    <td>{{this.order_date}}</td>
+                    <td>{{this.order_total}}</td>
+                    <td>{{this.customer_id}}</td>
+                    <td>{{this.shipping_status}}</td>
+                    <td>{{this.shipadd_line1}}</td>
+                    <td>{{this.shipadd_line2}}</td>
+                    <td>{{this.shipadd_city}}</td>
+                    <td>{{this.shipadd_state}}</td>
+                    <td>{{this.shipadd_zipcode}}</td>
+                </tr>
+                {{/each}}
+
+                {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+                {{#each details}}
+                <tr data-value={{this.order_id}}>
+                    {{!-- Delete Button --}}
+                    <td><button class="deleteButton" onclick="deletePerson({{this.order_id}})">x</button></td>
+
+                    <td>{{this.order_id}}</td>
+                    <td>{{this.product_id}}</td>
+                    <td>{{this.product_price}}</td>
+                    <td>{{this.product_qty}}</td>
+                    <td>{{this.discount}}</td>
+                    <td>{{this.sub_total}}</td>
+                </tr>
+                {{/each}}
+
+                {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+                {{#each products}}
+                <tr data-value={{this.product_id}}>
+                    {{!-- Delete Button --}}
+                    <td><button class="deleteButton" onclick="deletePerson({{this.product_id}})">x</button></td>
+
+                    <td>{{this.product_id}}</td>
+                    <td>{{this.product_name}}</td>
+                    <td>{{this.product_des}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.stock}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    {{!-- Delete person js file --}}
+    <script src="js/delete_person.js"></script>
+
+    {{!-- Form to add a record to the table using AJAX --}}
+    <h2>Adding Data in Customer table with AJAX</h2>
+    <p>To add a new customer, please enter their information below and click 'Submit'!</p>
+
+    <form id="add-person-form-ajax" required="required">
+        <div class="row">
+            <div class="column">
+                <label for="input-fname">*First Name: </label>
+                <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name">
+            </div>
+            <div class="column">
+                <label for="input-lname">*Last Name: </label>
+                <div style="color:red; float: right;">*Required </div>
+                <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name">
+            </div>
+        </div>
+
+        <label for="input-phone">*Phone: </label>
+        <input type="number" name="input-phone" id="input-phone" placeholder="Enter Phone Number">
+
+        <br>
+        <input class="button" type="submit">
+    </form>
+
+    {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+    <script src="js/add_person.js"></script>
+
+
+    <h2>Updating A User's Phone Number Form</h2>
+    <p>To update a specific customer's phone number, select their name from the drop-down menu on the left and input the
+        new phone number on the input box</p>
+    <form id="update-person-form-ajax" required="required">
+
+        <label for="input-fullname">*Full name: </label>
+        <div style="color:red; float: right;">*Required </div>
+        <select name="input-fullname" id="mySelect">
+            <option value="test">Select a Person</option>
+            {{#each data}}
+            <option value="{{this.customer_id}}">{{this.first_name}} {{this.last_name}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <label for="input-homeworld">*Update Phone Number to: </label>
+        <input type="number" name="input-phone-update" id="input-phone-update" placeholder="Enter new Phone Number">
+        <br>
+        <input class="button" type="submit" value="Submit Query">
+
+    </form>
+</div>
+<script src="js/update_person.js"></script>
+
+{{!-- Form to add a record to the table --}}
+{{!-- <h2>Adding Data using an HTML form</h2>
+<p>To add a new person, please enter their information below and click 'Submit'!</p>
+<form id="add-person-form" method="POST" action="/add-person-form">
+    <label for="input-fname">First Name: </label>
+    <input type="text" name="input-fname" id="input-fname">
+
+    <label for="input-lname">Last Name: </label>
+    <input type="text" name="input-lname" id="input-lname">
+
+    <label for="input-phone">Phone: </label>
+    <input type="number" name="input-phone" id="input-phone">
+
+    <input type="submit">
+</form> --}}
