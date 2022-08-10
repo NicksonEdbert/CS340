@@ -44,6 +44,7 @@ updatePersonForm.addEventListener("submit", function (e) {
 
    // Send the request and wait for the response
    xhttp.send(JSON.stringify(data));
+   alert("Your Database had been updated!");
 });
 
 function updateRow(data, personID) {
@@ -59,7 +60,7 @@ function updateRow(data, personID) {
          let updateRowIndex = table.getElementsByTagName("tr")[i];
 
          // Get td of homeworld value
-         let td = updateRowIndex.getElementsByTagName("td")[4];
+         let td = updateRowIndex.getElementsByTagName("td")[5];
 
          // Reassign homeworld to our value we updated to
          td.innerHTML = parsedData[0].phone;

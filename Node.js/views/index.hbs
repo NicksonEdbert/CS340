@@ -22,7 +22,7 @@
     </p>
 
     {{!-- Create a table --}}
-    <div style="overflow-x:auto;">
+    <div style="overflow-x:auto; width: 100%;">
         <table id="people-table">
 
             {{!-- Header section --}}
@@ -33,7 +33,7 @@
                 <tr>
                     <th>Delete</th>
                     {{#each data.[0]}}
-                    <th>
+                    <th class="columnName">
                         {{@key}}
                     </th>
                     {{/each}}
@@ -117,32 +117,231 @@
     {{!-- Delete person js file --}}
     <script src="js/delete_person.js"></script>
 
+    {{!-- Form to add a record to the table --}}
+    <h2>Adding Data using a HTML form</h2>
+
+    {{!-- Select which table to add --}}
+    <p>
+    <form>
+        <select name="select" id="selectTable" onchange="updateForm(value)">
+            <option value="none" selected disabled hidden>Select a Table</option>
+            <option>Customers</option>
+            <option>Orders</option>
+            <option>Order_Details</option>
+            <option>Products</option>
+        </select>
+    </form>
+    </p>
+
+    <div class="addCustomer" id="addCustomer">
+        <p>To add a new person, please enter their information below and click 'Submit'!</p>
+        <form id="add-person-form" method="POST" action="/add-person-form">
+
+            <div class="row" style="font-weight: bold;">
+                <div class="column">
+                    {{!-- First Name Input --}}
+                    <label for="input-fname"><span style="color:red">*</span>First Name: </label>
+                    <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name" value="John"
+                        required>
+                </div>
+                <div class="column">
+                    {{!-- Last Name Input --}}
+                    <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
+                    <div style="color:red; float: right;">*Required </div>
+                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
+                        required>
+                </div>
+
+                <div class="column">
+                    {{!-- Middle Name Input --}}
+                    <label for="input-mname">Middle Name: </label>
+                    <input type="text" name="input-mname" id="input-mname" placeholder="Enter Middle Number"
+                        value="Apple">
+                </div>
+                <div class="column">
+                    {{!-- Phone Number Input --}}
+                    <label for="input-phone">Phone: </label>
+                    <input type="tel" name="input-phone" id="input-phone" placeholder="Enter Phone Number"
+                        value="123456789">
+                </div>
+
+                <div class="column">
+                    {{!-- Email Input --}}
+                    <label for="input-email"><span style="color:red">*</span>Email: </label>
+                    <input type="email" name="input-email" id="input-email" placeholder="Enter Email"
+                        value="doejohn@gmail.com" required>
+                </div>
+                <div class="column">
+                    {{!-- Address Line 1 Input --}}
+                    <label for="input-line1"><span style="color:red">*</span>Address Line 1: </label>
+                    <input type="text" name="input-line1" id="input-line1" placeholder="Enter Address Line 1"
+                        value="60025 Bollinger Canyon Road" required>
+                </div>
+
+                <div class="column">
+                    {{!-- Address Line 2 Input --}}
+                    <label for="input-line2"><span style="color:red">*</span>Address Line 2: </label>
+                    <input type="text" name="input-line2" id="input-line2" placeholder="Enter Address Line 2"
+                        value="Apt 306" required>
+                </div>
+                <div class="column">
+                    {{!-- City Input --}}
+                    <label for="input-city"><span style="color:red">*</span>City: </label>
+                    <input type="text" name="input-city" id="input-city" placeholder="Enter City" value="San Francisco"
+                        required>
+                </div>
+
+                <div class="column">
+                    {{!-- State Input --}}
+                    <label for="input-state"><span style="color:red">*</span>State: </label>
+                    <input type="text" name="input-state" id="input-state" placeholder="Enter State" value="California"
+                        required>
+                </div>
+                <div class="column">
+                    {{!-- Zipcode Input --}}
+                    <label for="input-zipcode"><span style="color:red">*</span>Zipcode: </label>
+                    <input type="text" name="input-zipcode" id="input-zipcode" placeholder="Enter ZipCode" value="94583"
+                        required>
+                </div>
+            </div>
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
+    <div class="addOrder" id="addOrder">
+        <p>To add a new order, please enter their information below and click 'Submit'!</p>
+        <form id="add-person-form" method="POST" action="/add-person-form">
+            <div class="row">
+                <div class="column">
+                    {{!-- Order Date Input --}}
+                    <label for="input-date"><span style="color:red">*</span>Order Date: </label>
+                    <input type="date" name="input-date" id="input-date" placeholder="Enter Order Date"
+                        value="2022-08-17" required>
+                </div>
+                <div class="column">
+                    {{!-- Order Total Input --}}
+                    <label for="input-total"><span style="color:red">*</span>Order Total: </label>
+                    <div style="color:red; float: right;">*Required </div>
+                    <input type="number" name="input-total" id="input-total" placeholder="Enter Order Total"
+                        value="19.56" required>
+                </div>
+
+                <div class="column">
+                    {{!-- Customer ID Input --}}
+                    <select name="input-id" id="myId" required>
+                        <option value="">Select Customer ID</option>
+                        {{#each customers}}
+                        <option value="{{this.customer_id}}">{{this.customer_id}}</option>
+                        {{/each}}
+                    </select>
+                    <label for="input-id"><span style="color:red">*</span>Customer ID: </label>
+                    <input type="text" name="input-id" id="input-id" placeholder="Enter First Name" value="John"
+                        required>
+                </div>
+                <div class="column">
+                    {{!-- Shipping Status Input --}}
+                    <label for="input-lname"><span style="color:red">*</span>Shipping Status: </label>
+                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
+                        required>
+                </div>
+            </div>
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
+    <div class="addDetail" id="addDetail">
+        <p>To add a new person, please enter their information below and click 'Submit'!</p>
+        <form id="add-person-form" method="POST" action="/add-person-form">
+            <div class="row">
+                <div class="column">
+                    <label for="input-fname"><span style="color:red">*</span>Order ID: </label>
+                    <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name" value="John"
+                        required>
+                </div>
+                <div class="column">
+                    <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
+                    <div style="color:red; float: right;">*Required </div>
+                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
+                        required>
+                </div>
+            </div>
+
+            <label for="input-phone"><span style="color:red">*</span>Phone: </label>
+            <input type="tel" name="input-phone" id="input-phone" placeholder="Enter Phone Number" value="123456789"
+                required>
+
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
+    <div class="addProduct" id="addProduct">
+        <p>To add a new person, please enter their information below and click 'Submit'!</p>
+        <form id="add-person-form" method="POST" action="/add-person-form">
+            <div class="row">
+                <div class="column">
+                    {{!-- Order Date Input --}}
+                    <label for="input-date"><span style="color:red">*</span>Order Date: </label>
+                    <input type="date" name="input-date" id="input-date" placeholder="Enter Order Date"
+                        value="2022-08-17" required>
+                </div>
+                <div class="column">
+                    {{!-- Order Total Input --}}
+                    <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
+                    <div style="color:red; float: right;">*Required </div>
+                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
+                        required>
+                </div>
+
+                <div class="column">
+                    {{!-- Customer ID Input --}}
+                    <label for="input-fname"><span style="color:red">*</span>Product Name: </label>
+                    <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name" value="John"
+                        required>
+                </div>
+                <div class="column">
+                    {{!-- Shipping Status Input --}}
+                    <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
+                    <div style="color:red; float: right;">*Required </div>
+                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
+                        required>
+                </div>
+            </div>
+
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
     {{!-- Form to add a record to the table using AJAX --}}
-    <h2>Adding Data in Customer table with AJAX</h2>
+    {{!-- <h2>Adding Data in Customer table with AJAX</h2>
     <p>To add a new customer, please enter their information below and click 'Submit'!</p>
 
     <form id="add-person-form-ajax" required="required">
         <div class="row">
             <div class="column">
-                <label for="input-fname">*First Name: </label>
-                <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name">
+                <label for="input-fname"><span style="color:red">*</span>First Name: </label>
+                <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name" required>
             </div>
             <div class="column">
-                <label for="input-lname">*Last Name: </label>
+                <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
                 <div style="color:red; float: right;">*Required </div>
-                <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name">
+                <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" required>
             </div>
         </div>
 
-        <label for="input-phone">*Phone: </label>
-        <input type="number" name="input-phone" id="input-phone" placeholder="Enter Phone Number">
+        <label for="input-phone"><span style="color:red">*</span>Phone: </label>
+        <input type="number" name="input-phone" id="input-phone" placeholder="Enter Phone Number" required>
 
         <br>
         <input class="button" type="submit">
-    </form>
+    </form> --}}
 
     {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
     <script src="js/add_person.js"></script>
+    <script src="js/update_form.js"></script>
 
 
     <h2>Updating A User's Phone Number Form</h2>
@@ -150,36 +349,21 @@
         new phone number on the input box</p>
     <form id="update-person-form-ajax" required="required">
 
-        <label for="input-fullname">*Full name: </label>
+        <label for="input-fullname"><span style="color:red">*</span>Full name: </label>
         <div style="color:red; float: right;">*Required </div>
-        <select name="input-fullname" id="mySelect">
-            <option value="test">Select a Person</option>
+        <select name="input-fullname" id="mySelect" required>
+            <option value="">Select a Person</option>
             {{#each data}}
             <option value="{{this.customer_id}}">{{this.first_name}} {{this.last_name}}</option>
             {{/each}}
         </select>
         <br>
-        <label for="input-homeworld">*Update Phone Number to: </label>
-        <input type="number" name="input-phone-update" id="input-phone-update" placeholder="Enter new Phone Number">
+        <label for="input-homeworld"><span style="color:red">*</span>Update Phone Number to: </label>
+        <input type="tel" name="input-phone-update" id="input-phone-update" placeholder="Enter new Phone Number"
+            value="123456789" required>
         <br>
         <input class="button" type="submit" value="Submit Query">
 
     </form>
 </div>
 <script src="js/update_person.js"></script>
-
-{{!-- Form to add a record to the table --}}
-{{!-- <h2>Adding Data using an HTML form</h2>
-<p>To add a new person, please enter their information below and click 'Submit'!</p>
-<form id="add-person-form" method="POST" action="/add-person-form">
-    <label for="input-fname">First Name: </label>
-    <input type="text" name="input-fname" id="input-fname">
-
-    <label for="input-lname">Last Name: </label>
-    <input type="text" name="input-lname" id="input-lname">
-
-    <label for="input-phone">Phone: </label>
-    <input type="number" name="input-phone" id="input-phone">
-
-    <input type="submit">
-</form> --}}

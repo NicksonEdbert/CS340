@@ -10,19 +10,40 @@ addPersonForm.addEventListener("submit", function (e) {
    // Get form fields we need to get data from
    let inputFirstName = document.getElementById("input-fname");
    let inputLastName = document.getElementById("input-lname");
+   let inputMiddleName = document.getElementById("input-mname");
    let inputPhone = document.getElementById("input-phone");
+   let inputEmail = document.getElementById("input-email");
+   let inputLine1 = document.getElementById("input-line1");
+   let inputLine2 = document.getElementById("input-line2");
+   let inputCity = document.getElementById("input-city");
+   let inputState = document.getElementById("input-state");
+   let inputZipcode = document.getElementById("input-zipcode");
 
    // Get the values from the form fields
    let firstNameValue = inputFirstName.value;
    let lastNameValue = inputLastName.value;
+   let middleNameValue = inputMiddleName.value;
    let phoneValue = inputPhone.value;
+   let emailValue = inputEmail.value;
+   let line1Value = inputLine1.value;
+   let line2Value = inputLine2.value;
+   let cityValue = inputCity.value;
+   let stateValue = inputState.value;
+   let zipcodeValue = inputZipcode.value;
 
    // PUT DATA
    // Put our data we want to send in a javascript object
    let data = {
       first_name: firstNameValue,
       last_name: lastNameValue,
+      middle_name: middleNameValue,
       phone: phoneValue,
+      email: emailValue,
+      line1: line1Value,
+      line2: line2Value,
+      city: cityValue,
+      state: stateValue,
+      zipcode: zipcodeValue
    };
 
    // Setup our AJAX request
@@ -39,7 +60,14 @@ addPersonForm.addEventListener("submit", function (e) {
          // Clear the input fields for another transaction
          inputFirstName.value = "";
          inputLastName.value = "";
+         inputMiddleName.value = "";
          inputPhone.value = "";
+         inputEmail.value = "";
+         inputLine1.value = "";
+         inputLine2.value = "";
+         inputCity.value = "";
+         inputState.value = "";
+         inputZipcode.value = "";
       } else if (xhttp.readyState == 4 && xhttp.status != 200) {
          console.log("There was an error with the input.");
       }
@@ -62,24 +90,45 @@ addRowToTable = (data) => {
    let parsedData = JSON.parse(data);
    let newRow = parsedData[parsedData.length - 1];
 
-   // Create a row and 4 cells
+   // Create a row and 10 cells
    let row = document.createElement("TR");
    let idCell = document.createElement("TD");
    let firstNameCell = document.createElement("TD");
    let lastNameCell = document.createElement("TD");
+   let middleNameCell = document.createElement("TD");
    let phoneCell = document.createElement("TD");
+   let emailCell = document.createElement("TD");
+   let line1Cell = document.createElement("TD");
+   let line2Cell = document.createElement("TD");
+   let cityCell = document.createElement("TD");
+   let stateCell = document.createElement("TD");
+   let zipcodeCell = document.createElement("TD");
 
    // Fill the cells with correct data
    idCell.innerText = newRow.id;
    firstNameCell.innerText = newRow.first_name;
    lastNameCell.innerText = newRow.last_name;
+   middleNameCell.innerText = newRow.mid_name;
    phoneCell.innerText = newRow.phone;
+   emailCell.innerText = newRow.email;
+   line1Cell.innerText = newRow.cusadd_line1;
+   line2Cell.innerText = newRow.cusadd_line2;
+   cityCell.innerText = newRow.cusadd_city;
+   stateCell.innerText = newRow.cusadd_state;
+   zipcodeCell.innerText = newRow.cusadd_zipcode;
 
    // Add the cells to the row
    row.appendChild(idCell);
    row.appendChild(firstNameCell);
    row.appendChild(lastNameCell);
+   row.appendChild(middleNameCell);
    row.appendChild(phoneCell);
+   row.appendChild(emailCell);
+   row.appendChild(line1Cell);
+   row.appendChild(line2Cell);
+   row.appendChild(cityCell);
+   row.appendChild(stateCell);
+   row.appendChild(zipcodeCell);
 
    // Add a row attribute so the deleteRow function can find a newly added row
    row.setAttribute("data-value", newRow.id);
