@@ -7,24 +7,26 @@ updatePersonForm.addEventListener("submit", function (e) {
    e.preventDefault();
 
    // Get form fields we need to get data from
-   let inputFullName = document.getElementById("mySelect");
-   let inputHomeworld = document.getElementById("input-phone-update");
+   let inputProductId = document.getElementById("myUpdatePid");
+   let inputOrderId = document.getElementById("myUpdateOid");
+   let inputQuantity = document.getElementById("input-qty-update");
+   let inputSubtotal = document.getElementById("input-stotal-update");
 
    // Get the values from the form fields
-   let fullNameValue = inputFullName.value;
-   let homeworldValue = inputHomeworld.value;
+   let productIdValue = inputProductId.value;
+   let orderIdValue = inputOrderId.value;
+   let quantityValue = inputQuantity.value;
+   let subtotalValue = inputSubtotal.value;
 
-   // currently the database table for bsg_people does not allow updating values to NULL
-   // so we must abort if being bassed NULL for homeworld
-
-   if (isNaN(homeworldValue)) {
-      return;
-   }
+   console.log(productIdValue)
+   console.log(orderIdValue)
 
    // Put our data we want to send in a javascript object
    let data = {
-      fullname: fullNameValue,
-      homeworld: homeworldValue,
+      pid: productIdValue,
+      oid: orderIdValue,
+      quantity: quantityValue,
+      subtotal: subtotalValue
    };
 
    // Setup our AJAX request
@@ -36,7 +38,7 @@ updatePersonForm.addEventListener("submit", function (e) {
    xhttp.onreadystatechange = () => {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
          // Add the new data to the table
-         updateRow(xhttp.response, fullNameValue);
+         updateRow(xhttp.response, productIdValue, orderIdValue);
       } else if (xhttp.readyState == 4 && xhttp.status != 200) {
          console.log("There was an error with the input.");
       }
@@ -47,23 +49,25 @@ updatePersonForm.addEventListener("submit", function (e) {
    alert("Your Database had been updated!");
 });
 
-function updateRow(data, personID) {
+function updateRow(data, productId, orderId) {
    let parsedData = JSON.parse(data);
 
-   let table = document.getElementById("people-table");
+   let table = document.getElementById("detail-table");
 
    for (let i = 0, row; (row = table.rows[i]); i++) {
       //iterate through rows
       //rows would be accessed using the "row" variable assigned in the for loop
-      if (table.rows[i].getAttribute("data-value") == personID) {
+      if (table.rows[i].getAttribute("data-value") == orderId && table.rows[i].getAttribute("data-value2") == productId) {
          // Get the location of the row where we found the matching person ID
          let updateRowIndex = table.getElementsByTagName("tr")[i];
 
          // Get td of homeworld value
-         let td = updateRowIndex.getElementsByTagName("td")[5];
+         let tdQuantity = updateRowIndex.getElementsByTagName("td")[3];
+         let tdSubtotal = updateRowIndex.getElementsByTagName("td")[4];
 
          // Reassign homeworld to our value we updated to
-         td.innerHTML = parsedData[0].phone;
+         tdQuantity.innerHTML = parsedData[0].product_qty;
+         tdSubtotal.innerHTML = parsedData[0].sub_total;
       }
    }
 }

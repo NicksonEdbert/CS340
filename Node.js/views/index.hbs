@@ -10,8 +10,7 @@
     <p>Search for data from different table!</p>
     <p>
     <form id="search-person-html" method='GET' action='/'>
-        <select name="select" id="selectTable" onchange="this.form.submit()">
-            <option>Select a Table</option>
+        <select name="select" id="selectTable" onchange="updateTable(value)">
             <option>Customers</option>
             <option>Orders</option>
             <option>Order_Details</option>
@@ -22,17 +21,14 @@
     </p>
 
     {{!-- Create a table --}}
-    <div style="overflow-x:auto; width: 100%;">
-        <table id="people-table">
+    <div style="overflow-x:auto; width: 100%;" id="customerTable">
+        <table id="customer-table">
 
             {{!-- Header section --}}
             <thead>
-
-                {{!-- For just the first row, we print each key of the row object as a header cell so we
-                know what each column means when the page renders --}}
                 <tr>
                     <th>Delete</th>
-                    {{#each data.[0]}}
+                    {{#each customers.[0]}}
                     <th class="columnName">
                         {{@key}}
                     </th>
@@ -51,63 +47,139 @@
                     <td>{{this.customer_id}}</td>
                     <td>{{this.first_name}}</td>
                     <td>{{this.last_name}}</td>
-                    <td>{{this.mid_name}}</td>
+                    {{!-- <td>{{this.mid_name}}</td> --}}
                     <td>{{this.phone}}</td>
                     <td>{{this.email}}</td>
                     <td>{{this.cusadd_line1}}</td>
-                    <td>{{this.cusadd_line2}}</td>
+                    {{!-- <td>{{this.cusadd_line2}}</td> --}}
                     <td>{{this.cusadd_city}}</td>
                     <td>{{this.cusadd_state}}</td>
                     <td>{{this.cusadd_zipcode}}</td>
                 </tr>
                 {{/each}}
+            </tbody>
+        </table>
+    </div>
 
+    {{!-- Create an Order Table --}}
+    <div style="overflow-x:auto; width: 100%;" id="orderTable">
+        <table id="order-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we know what each
+                column means when the page renders --}}
+                <tr>
+                    <th>Delete</th>
+                    {{#each orders.[0]}}
+                    <th class="columnName">
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
                 {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
                 {{#each orders}}
                 <tr data-value={{this.order_id}}>
 
                     {{!-- Delete Button --}}
-                    <td><button class="deleteButton" onclick="deletePerson({{this.order_id}})">x</button></td>
+                    <td><button class="deleteButton">x</button></td>
+                    {{!-- <td><button class="deleteButton" onclick="deletePerson({{this.order_id}})">x</button></td> --}}
 
                     <td>{{this.order_id}}</td>
                     <td>{{this.order_date}}</td>
                     <td>{{this.order_total}}</td>
                     <td>{{this.customer_id}}</td>
                     <td>{{this.shipping_status}}</td>
-                    <td>{{this.shipadd_line1}}</td>
+                    {{!-- <td>{{this.shipadd_line1}}</td>
                     <td>{{this.shipadd_line2}}</td>
                     <td>{{this.shipadd_city}}</td>
                     <td>{{this.shipadd_state}}</td>
-                    <td>{{this.shipadd_zipcode}}</td>
+                    <td>{{this.shipadd_zipcode}}</td> --}}
                 </tr>
                 {{/each}}
+            </tbody>
+        </table>
+    </div>
 
+    {{!-- Create a Details Table --}}
+    <div style="overflow-x:auto; width: 100%;" id="detailTable">
+        <table id="detail-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we
+                know what each column means when the page renders --}}
+                <tr>
+                    <th>Delete</th>
+                    {{#each details.[0]}}
+                    <th class="columnName">
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
                 {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
                 {{#each details}}
-                <tr data-value={{this.order_id}}>
+                <tr data-value={{this.order_id}} data-value2={{this.product_id}}>
                     {{!-- Delete Button --}}
-                    <td><button class="deleteButton" onclick="deletePerson({{this.order_id}})">x</button></td>
+                    <td><button class="deleteButton">x</button></td>
+                    {{!-- <td><button class="deleteButton" onclick="deletePerson({{this.order_id}})">x</button></td> --}}
 
                     <td>{{this.order_id}}</td>
                     <td>{{this.product_id}}</td>
-                    <td>{{this.product_price}}</td>
+                    {{!-- <td>{{this.product_price}}</td> --}}
                     <td>{{this.product_qty}}</td>
-                    <td>{{this.discount}}</td>
+                    {{!-- <td>{{this.discount}}</td> --}}
                     <td>{{this.sub_total}}</td>
                 </tr>
                 {{/each}}
+            </tbody>
+        </table>
+    </div>
 
+    {{!-- Create a Product Table --}}
+    <div style="overflow-x:auto; width: 100%;" id="productTable">
+        <table id="product-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we
+                know what each column means when the page renders --}}
+                <tr>
+                    <th>Delete</th>
+                    {{#each products.[0]}}
+                    <th class="columnName">
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
                 {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
                 {{#each products}}
                 <tr data-value={{this.product_id}}>
                     {{!-- Delete Button --}}
-                    <td><button class="deleteButton" onclick="deletePerson({{this.product_id}})">x</button></td>
+                    <td><button class="deleteButton">x</button></td>
+                    {{!-- <td><button class="deleteButton" onclick="deletePerson({{this.product_id}})">x</button></td> --}}
 
                     <td>{{this.product_id}}</td>
                     <td>{{this.product_name}}</td>
                     <td>{{this.product_des}}</td>
                     <td>{{this.price}}</td>
-                    <td>{{this.stock}}</td>
+                    {{!-- <td>{{this.stock}}</td> --}}
                 </tr>
                 {{/each}}
             </tbody>
@@ -124,7 +196,6 @@
     <p>
     <form>
         <select name="select" id="selectTable" onchange="updateForm(value)">
-            <option value="none" selected disabled hidden>Select a Table</option>
             <option>Customers</option>
             <option>Orders</option>
             <option>Order_Details</option>
@@ -152,12 +223,7 @@
                         required>
                 </div>
 
-                <div class="column">
-                    {{!-- Middle Name Input --}}
-                    <label for="input-mname">Middle Name: </label>
-                    <input type="text" name="input-mname" id="input-mname" placeholder="Enter Middle Number"
-                        value="Apple">
-                </div>
+
                 <div class="column">
                     {{!-- Phone Number Input --}}
                     <label for="input-phone">Phone: </label>
@@ -178,12 +244,7 @@
                         value="60025 Bollinger Canyon Road" required>
                 </div>
 
-                <div class="column">
-                    {{!-- Address Line 2 Input --}}
-                    <label for="input-line2"><span style="color:red">*</span>Address Line 2: </label>
-                    <input type="text" name="input-line2" id="input-line2" placeholder="Enter Address Line 2"
-                        value="Apt 306" required>
-                </div>
+
                 <div class="column">
                     {{!-- City Input --}}
                     <label for="input-city"><span style="color:red">*</span>City: </label>
@@ -210,8 +271,8 @@
     </div>
 
     <div class="addOrder" id="addOrder">
-        <p>To add a new order, please enter their information below and click 'Submit'!</p>
-        <form id="add-person-form" method="POST" action="/add-person-form">
+        <p>To add a new order, please enter the information below and click 'Submit'!</p>
+        <form id="add-order-form" method="POST" action="/add-order-form">
             <div class="row">
                 <div class="column">
                     {{!-- Order Date Input --}}
@@ -229,21 +290,24 @@
 
                 <div class="column">
                     {{!-- Customer ID Input --}}
+                    <label for="input-id"><span style="color:red">*</span>Customer ID: </label>
                     <select name="input-id" id="myId" required>
-                        <option value="">Select Customer ID</option>
+                        <option value="" selected disabled hidden>Select Customer ID</option>
                         {{#each customers}}
                         <option value="{{this.customer_id}}">{{this.customer_id}}</option>
                         {{/each}}
                     </select>
-                    <label for="input-id"><span style="color:red">*</span>Customer ID: </label>
-                    <input type="text" name="input-id" id="input-id" placeholder="Enter First Name" value="John"
-                        required>
                 </div>
                 <div class="column">
                     {{!-- Shipping Status Input --}}
-                    <label for="input-lname"><span style="color:red">*</span>Shipping Status: </label>
-                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
-                        required>
+                    <label for="input-status"><span style="color:red">*</span>Shipping Status: </label>
+                    <select name="input-status" id="myStatus" required>
+                        <option value="" selected disabled hidden>Select Shipping Status</option>
+                        <option value="not shipped">Not Shipped</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="returned">Returned</option>
+                    </select>
                 </div>
             </div>
             <br>
@@ -252,115 +316,122 @@
     </div>
 
     <div class="addDetail" id="addDetail">
-        <p>To add a new person, please enter their information below and click 'Submit'!</p>
-        <form id="add-person-form" method="POST" action="/add-person-form">
+        <p>To add a new order detail, please enter the information below and click 'Submit'!</p>
+        <form id="add-detail-form" method="POST" action="/add-detail-form">
             <div class="row">
                 <div class="column">
-                    <label for="input-fname"><span style="color:red">*</span>Order ID: </label>
-                    <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name" value="John"
+                    {{!-- Order ID Input --}}
+                    <label for="input-oid"><span style="color:red">*</span>Order ID: </label>
+                    <select name="input-oid" id="myOid" required>
+                        <option value="" selected disabled hidden>Select Order ID</option>
+                        {{#each orders}}
+                        <option value="{{this.order_id}}">{{this.order_id}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="column">
+                    {{!-- Product ID Input --}}
+                    <label for="input-pid"><span style="color:red">*</span>Product ID: </label>
+                    <div style="color:red; float: right;">*Required </div>
+                    <select name="input-pid" id="myPid" required>
+                        <option value="" selected disabled hidden>Select Product ID</option>
+                        {{#each products}}
+                        <option value="{{this.product_id}}">{{this.product_id}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="column">
+                    {{!-- Quantity Input --}}
+                    <label for="input-qty"><span style="color:red">*</span>Order Quantity: </label>
+                    <input type="number" name="input-qty" id="input-qty" placeholder="Enter Quantity" value="1"
                         required>
                 </div>
                 <div class="column">
-                    <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
-                    <div style="color:red; float: right;">*Required </div>
-                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
-                        required>
+                    {{!-- Subtotal Input --}}
+                    <label for="input-stotal"><span style="color:red">*</span>Order Subtotal: </label>
+                    <input type="number" name="input-stotal" id="input-stotal" placeholder="Enter Subtotal"
+                        value="19.56" required>
                 </div>
             </div>
-
-            <label for="input-phone"><span style="color:red">*</span>Phone: </label>
-            <input type="tel" name="input-phone" id="input-phone" placeholder="Enter Phone Number" value="123456789"
-                required>
-
             <br>
             <input type="submit">
         </form>
     </div>
 
     <div class="addProduct" id="addProduct">
-        <p>To add a new person, please enter their information below and click 'Submit'!</p>
-        <form id="add-person-form" method="POST" action="/add-person-form">
+        <p>To add a new Product, please enter the information below and click 'Submit'!</p>
+        <form id="add-product-form" method="POST" action="/add-product-form">
             <div class="row">
-                <div class="column">
-                    {{!-- Order Date Input --}}
-                    <label for="input-date"><span style="color:red">*</span>Order Date: </label>
-                    <input type="date" name="input-date" id="input-date" placeholder="Enter Order Date"
-                        value="2022-08-17" required>
-                </div>
-                <div class="column">
-                    {{!-- Order Total Input --}}
-                    <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
-                    <div style="color:red; float: right;">*Required </div>
-                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
-                        required>
-                </div>
-
-                <div class="column">
-                    {{!-- Customer ID Input --}}
-                    <label for="input-fname"><span style="color:red">*</span>Product Name: </label>
-                    <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name" value="John"
-                        required>
-                </div>
-                <div class="column">
-                    {{!-- Shipping Status Input --}}
-                    <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
-                    <div style="color:red; float: right;">*Required </div>
-                    <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" value="Doe"
-                        required>
-                </div>
+                {{!-- Product Name Input --}}
+                <label for="input-pname"><span style="color:red">*</span>Product Name: </label>
+                <div style="color:red; float: right;">*Required </div>
+                <input type="text" name="input-pname" id="input-pname" placeholder="Enter Product Name" value="Apple"
+                    required>
             </div>
-
+            <div class="column">
+                {{!-- Product Description Input --}}
+                <label for="input-desc"><span style="color:red">*</span>Product Description: </label>
+                <input type="text" name="input-desc" id="input-desc" placeholder="Enter Product Description"
+                    value="Top Quality Apple" required>
+            </div>
+            <div class="column">
+                {{!-- Product Price Input --}}
+                <label for="input-price"><span style="color:red">*</span>Product Price: </label>
+                <input type="number" name="input-price" id="input-price" placeholder="Enter Product Price" value="19.56"
+                    required>
+            </div>
             <br>
             <input type="submit">
         </form>
     </div>
-
-    {{!-- Form to add a record to the table using AJAX --}}
-    {{!-- <h2>Adding Data in Customer table with AJAX</h2>
-    <p>To add a new customer, please enter their information below and click 'Submit'!</p>
-
-    <form id="add-person-form-ajax" required="required">
-        <div class="row">
-            <div class="column">
-                <label for="input-fname"><span style="color:red">*</span>First Name: </label>
-                <input type="text" name="input-fname" id="input-fname" placeholder="Enter First Name" required>
-            </div>
-            <div class="column">
-                <label for="input-lname"><span style="color:red">*</span>Last Name: </label>
-                <div style="color:red; float: right;">*Required </div>
-                <input type="text" name="input-lname" id="input-lname" placeholder="Enter Last Name" required>
-            </div>
-        </div>
-
-        <label for="input-phone"><span style="color:red">*</span>Phone: </label>
-        <input type="number" name="input-phone" id="input-phone" placeholder="Enter Phone Number" required>
-
-        <br>
-        <input class="button" type="submit">
-    </form> --}}
 
     {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
     <script src="js/add_person.js"></script>
     <script src="js/update_form.js"></script>
 
 
-    <h2>Updating A User's Phone Number Form</h2>
-    <p>To update a specific customer's phone number, select their name from the drop-down menu on the left and input the
-        new phone number on the input box</p>
+    <h2>Updating A Specific Order Details Form</h2>
+    <p>To update a specific order detail, select their product id and order id from the drop-down menu and input the new
+        quantity and subtotal on the input box.</p>
     <form id="update-person-form-ajax" required="required">
+        <div class="row">
+            <div class="column">
+                {{!-- Product ID Input --}}
+                <label for="input-pid"><span style="color:red">*</span>Product ID: </label>
+                <select name="input-pid" id="myUpdatePid" required>
+                    <option value="" selected disabled hidden>Select Product ID</option>
+                    {{#each products}}
+                    <option value="{{this.product_id}}">{{this.product_id}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="column">
+                {{!-- Order ID Input --}}
+                <label for="input-oid"><span style="color:red">*</span>Order ID: </label>
+                <div style="color:red; float: right;">*Required </div>
+                <select name="input-oid" id="myUpdateOid" required>
+                    <option value="" selected disabled hidden>Select Order ID</option>
+                    {{#each orders}}
+                    <option value="{{this.order_id}}">{{this.order_id}}</option>
+                    {{/each}}
+                </select>
+            </div>
 
-        <label for="input-fullname"><span style="color:red">*</span>Full name: </label>
-        <div style="color:red; float: right;">*Required </div>
-        <select name="input-fullname" id="mySelect" required>
-            <option value="">Select a Person</option>
-            {{#each data}}
-            <option value="{{this.customer_id}}">{{this.first_name}} {{this.last_name}}</option>
-            {{/each}}
-        </select>
-        <br>
-        <label for="input-homeworld"><span style="color:red">*</span>Update Phone Number to: </label>
-        <input type="tel" name="input-phone-update" id="input-phone-update" placeholder="Enter new Phone Number"
-            value="123456789" required>
+            <div class="column">
+                {{!-- Quantity Input --}}
+                <label for="input-qty-update"><span style="color:red">*</span>Update Order Quantity: </label>
+                <input type="number" name="input-qty-update" id="input-qty-update" placeholder="Enter Quantity"
+                    value="1" required>
+            </div>
+            <div class="column">
+                {{!-- Subtotal Input --}}
+                <label for="input-stotal-update"><span style="color:red">*</span>Update Order Subtotal: </label>
+                <input type="number" name="input-stotal-update" id="input-stotal-update" placeholder="Enter Subtotal"
+                    value="19.56" required>
+            </div>
+        </div>
+
         <br>
         <input class="button" type="submit" value="Submit Query">
 
