@@ -31,11 +31,9 @@ CREATE TABLE `Customers` (
   `customer_id` int(11) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
-  `mid_name` varchar(255) DEFAULT NULL,
   `phone` int(11) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `cusadd_line1` varchar(255) NOT NULL,
-  `cusadd_line2` varchar(10) DEFAULT NULL,
   `cusadd_city` varchar(20) NOT NULL,
   `cusadd_state` varchar(20) NOT NULL,
   `cusadd_zipcode` int(5) NOT NULL,
@@ -46,9 +44,9 @@ CREATE TABLE `Customers` (
 -- Dumping data for table `Customers`
 --
 
-INSERT INTO `Customers` (`customer_id`, `first_name`, `last_name`, `mid_name`, `phone`, `email`, `cusadd_line1`, `cusadd_line2`, `cusadd_city`, `cusadd_state`, `cusadd_zipcode`) VALUES
-(1, 'Barret', 'Mila', NULL, '1234567890', NULL, '60025 Bollinger Canyon Road', NULL, 'San Ramon', 'California', 94583),
-(2, 'Smith', 'White', '', NULL, 'SmithWhite_CS340@hotmail.com', '482505 Warm Springs Blvd.', NULL, 'Fremont', 'California', 94536);
+INSERT INTO `Customers` (`customer_id`, `first_name`, `last_name`, `phone`, `email`, `cusadd_line1`, `cusadd_city`, `cusadd_state`, `cusadd_zipcode`) VALUES
+(1, 'Barret', 'Mila', '1234567890', NULL, '60025 Bollinger Canyon Road', 'San Ramon', 'California', 94583),
+(2, 'Smith', 'White', NULL, 'SmithWhite_CS340@hotmail.com', '482505 Warm Springs Blvd.', 'Fremont', 'California', 94536);
 
 -- --------------------------------------------------------
 
@@ -61,21 +59,16 @@ CREATE TABLE `Orders` (
   `order_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   `order_total` decimal(12,2) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `shipping_status` enum('not shipped','shipped','delivered','returned') NOT NULL,
-  `shipadd_line1` varchar(255) NOT NULL,
-  `shipadd_line2` varchar(10) DEFAULT NULL,
-  `shipadd_city` varchar(20) NOT NULL,
-  `shipadd_state` varchar(20) NOT NULL,
-  `shipadd_zipcode` int(5) NOT NULL
+  `shipping_status` enum('not shipped','shipped','delivered','returned') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `Orders`
 --
 
-INSERT INTO `Orders` (`order_id`, `order_date`, `order_total`, `customer_id`, `shipping_status`, `shipadd_line1`, `shipadd_line2`, `shipadd_city`, `shipadd_state`, `shipadd_zipcode`) VALUES
-(1, '2022-07-21 23:35:30', '17.85', 1, 'delivered', '60025 Bollinger Canyon Road', NULL, 'San Ramon', 'California', 94583),
-(2, '2022-07-16 23:37:25', '11.90', 2, 'shipped', '482505 Warm Springs Blvd.', NULL, 'Fremont', 'California', 94536);
+INSERT INTO `Orders` (`order_id`, `order_date`, `order_total`, `customer_id`, `shipping_status`) VALUES
+(1, '2022-07-21 23:35:30', '17.85', 1, 'delivered'),
+(2, '2022-07-16 23:37:25', '11.90', 2, 'shipped');
 
 -- --------------------------------------------------------
 
@@ -86,9 +79,7 @@ INSERT INTO `Orders` (`order_id`, `order_date`, `order_total`, `customer_id`, `s
 CREATE TABLE `Order_Details` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `product_price` decimal(12,2) NOT NULL,
   `product_qty` int(11) NOT NULL,
-  `discount` decimal(12,2) DEFAULT NULL,
   `sub_total` decimal(12,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -96,9 +87,9 @@ CREATE TABLE `Order_Details` (
 -- Dumping data for table `Order_Details`
 --
 
-INSERT INTO `Order_Details` (`order_id`, `product_id`, `product_price`, `product_qty`, `discount`, `sub_total`) VALUES
-(1, 1, '5.95', 1, '0.00', '17.85'),
-(2, 1, '5.95', 2, '0.00', '11.90');
+INSERT INTO `Order_Details` (`order_id`, `product_id`, `product_qty`, `sub_total`) VALUES
+(1, 1, 1, '17.85'),
+(2, 1, 2, '11.50');
 
 -- --------------------------------------------------------
 
@@ -110,17 +101,16 @@ CREATE TABLE `Products` (
   `product_id` int(11) NOT NULL,
   `product_name` varchar(50) NOT NULL,
   `product_des` mediumtext DEFAULT NULL,
-  `price` decimal(12,2) NOT NULL,
-  `stock` int(11) NOT NULL
+  `price` decimal(12,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `Products`
 --
 
-INSERT INTO `Products` (`product_id`, `product_name`, `product_des`, `price`, `stock`) VALUES
-(1, 'Oranges 5lbs pack', 'Fresh Orange from a rural farm', '5.95', 3000),
-(2, 'Oranges 10lbs pack', 'Fresh Orange from a rural farm', '11.50', 1000);
+INSERT INTO `Products` (`product_id`, `product_name`, `product_des`, `price`) VALUES
+(1, 'Oranges 5lbs pack', 'Fresh Orange from a rural farm', '5.95'),
+(2, 'Oranges 10lbs pack', 'Fresh Orange from a rural farm', '11.90');
 
 --
 -- Indexes for dumped tables
