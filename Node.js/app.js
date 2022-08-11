@@ -123,46 +123,7 @@ app.get("/", function (req, res) {
 }); // received back from the query
 
 // POST ROUTES
-app.post("/add-person-ajax", function (req, res) {
-   // Capture the incoming data and parse it back to a JS object
-   let data = req.body;
-
-   // console.log(data)
-
-   // Capture NULL values
-   let phone = parseInt(data.phone);
-   if (isNaN(phone)) {
-      phone = "NULL";
-   }
-
-   // Create the query and run it on the database
-   query1 = `INSERT INTO Customers (first_name, last_name, phone) VALUES ('${data.first_name}', '${data.last_name}', ${phone});`;
-   db.pool.query(query1, function (error, rows, fields) {
-      // Check to see if there was an error
-      if (error) {
-         // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-         console.log(error);
-         res.sendStatus(400);
-      } else {
-         // If there was no error, perform a SELECT * on bsg_people
-         query2 = `SELECT * FROM Customers;`;
-         db.pool.query(query2, function (error, rows, fields) {
-            // If there was an error on the second query, send a 400
-            if (error) {
-               // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-               console.log(error);
-               res.sendStatus(400);
-            }
-            // If all went well, send the results of the query back.
-            else {
-               res.send(rows);
-            }
-         });
-      }
-   });
-});
-
-// app.post("/add-person-form", function (req, res) {
+// app.post("/add-person-ajax", function (req, res) {
 //    // Capture the incoming data and parse it back to a JS object
 //    let data = req.body;
 
@@ -173,21 +134,53 @@ app.post("/add-person-ajax", function (req, res) {
 //    }
 
 //    // Create the query and run it on the database
-//    query1 = `INSERT INTO Customers (first_name, last_name, phone) VALUES ('${data["input-fname"]}', '${data["input-lname"]}', '${data["input-phone"]}')`;
+//    query1 = `INSERT INTO Customers (first_name, last_name, phone) VALUES ('${data.first_name}', '${data.last_name}', ${phone});`;
 //    db.pool.query(query1, function (error, rows, fields) {
 //       // Check to see if there was an error
 //       if (error) {
 //          // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
 //          console.log(error);
 //          res.sendStatus(400);
-//       }
-//       // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
-//       // presents it on the screen
-//       else {
-//          res.redirect("/");
+//       } else {
+//          // If there was no error, perform a SELECT * on bsg_people
+//          query2 = `SELECT * FROM Customers;`;
+//          db.pool.query(query2, function (error, rows, fields) {
+//             // If there was an error on the second query, send a 400
+//             if (error) {
+//                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+//                console.log(error);
+//                res.sendStatus(400);
+//             }
+//             // If all went well, send the results of the query back.
+//             else {
+//                res.send(rows);
+//             }
+//          });
 //       }
 //    });
 // });
+
+app.post("/add-person-form", function (req, res) {
+   // Capture the incoming data and parse it back to a JS object
+   let data = req.body;
+
+
+   // Create the query and run it on the database
+   query1 = `INSERT INTO Customers (first_name, last_name, mid_name, phone, email, cusadd_line1, cusadd_line2, cusadd_city, cusadd_state, cusadd_zipcode) VALUES ('${data["input-fname"]}', '${data["input-lname"]}', '${data["input-mname"]}', '${data["input-phone"]}', '${data["input-email"]}', '${data["input-line1"]}', '${data["input-line2"]}', '${data["input-city"]}', '${data["input-state"]}', '${data["input-zipcode"]}')`;
+   db.pool.query(query1, function (error, rows, fields) {
+      // Check to see if there was an error
+      if (error) {
+         // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+         console.log(error);
+         res.sendStatus(400);
+      }
+      // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+      // presents it on the screen
+      else {
+         res.redirect("/?select=Customers")
+      }
+   });
+});
 
 // Delete Route
 
